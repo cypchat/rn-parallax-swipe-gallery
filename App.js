@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, View, StatusBar} from 'react-native';
 
 // components
-import ParallaxProfile from './Gallery'
+import Gallery from './Gallery'
 
 const PARALLAX_DATA = [
     {
@@ -33,7 +33,7 @@ export default class App extends React.Component {
         return (
             <View style={styles.container}>
                 <StatusBar hidden={true}/>
-                <ParallaxProfile
+                <Gallery
                     image_data={PARALLAX_DATA}
                     full_size={false}
                 />

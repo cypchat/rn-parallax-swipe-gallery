@@ -102,7 +102,7 @@ class BlurredImage extends Component {
 }
 
 
-export default class ParallaxProfile extends Component {
+export default class Gallery extends Component {
 
     constructor(props) {
         super(props);
