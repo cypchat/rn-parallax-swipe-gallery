@@ -5,5 +5,4 @@ TinderCard
 .expo
 node_modules
 yarn.lock
-babel.config.js
 package-lock.json
