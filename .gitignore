@@ -1,0 +1,7 @@
+TinderCard
+.watchmanconfig
+.idea
+.git
+.expo
+node_modules
+yarn.lock
