@@ -35,7 +35,6 @@ export default class App extends React.Component {
                 <StatusBar hidden={true}/>
                 <Gallery
                     image_data={PARALLAX_DATA}
-                    full_size={false}
                 />
             </View>
         );
