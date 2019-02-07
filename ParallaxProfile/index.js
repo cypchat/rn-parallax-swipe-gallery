@@ -96,7 +96,6 @@ class BlurredImage extends Component {
                         </View>
                 }
 
-
             </View>
         )
     }
@@ -111,8 +110,6 @@ export default class ParallaxProfile extends Component {
             index: 0,
             speed: 'slow'
         };
-
-        console.log(SCREEN_WIDTH);
 
         const position = new Animated.ValueXY();
         this.panResponder = PanResponder.create({
@@ -147,7 +144,6 @@ export default class ParallaxProfile extends Component {
         this.position.setValue({x: gestureState.dx, y: 0});
         const leftEdgeOfTheImage = SCREEN_WIDTH + Object.values(this.position.x)[1];
 
-
         // left side of the array is outside and if the first image is showing
         // the image can not go to anywhere because it is the end of the image array.
         if (leftEdgeOfTheImage > SCREEN_WIDTH && this.state.index === 0) {
@@ -166,12 +162,10 @@ export default class ParallaxProfile extends Component {
             this.setState({speed: 'slow'});
         }
 
-
     };
 
     handleRelease = gestureState => {
         const leftEdgeOfTheImage = SCREEN_WIDTH + Object.values(this.position.x)[1];
-
 
         // Visible left edge of the array if only in screen.
         if (leftEdgeOfTheImage > 0 && leftEdgeOfTheImage < SCREEN_WIDTH) {
@@ -399,22 +393,5 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0,0,0,0.5)',
         position: 'absolute',
         bottom: 0
-    },
-    title: {
-        fontSize: 15,
-        fontWeight: 'bold'
-    },
-    details: {
-        marginBottom: 20,
-    },
-    seperator: {
-        width: '100%',
-        height: 0.5,
-        backgroundColor: '#ddd',
-        marginTop: 5,
-        marginBottom: 5
-    },
-    text: {
-
     }
 });
