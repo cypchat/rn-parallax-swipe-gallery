@@ -1,5 +1,14 @@
-﻿# HOW TO
+﻿## Installation
+
+add it to your repo
+ 
+
+    npm i --save @cypchat/rn-parallax-swipe-gallery
+
+## HOW TO
+
 **(c) cypchat.**
+
 rn-parallax-swipe-gallery is a very easy to use parallax gallery.
 
 all you need to define a simple json api, such as:
