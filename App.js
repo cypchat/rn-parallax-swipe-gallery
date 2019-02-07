@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, View, StatusBar} from 'react-native';
 
 // components
-import ParallaxProfile from './ParallaxProfile'
+import ParallaxProfile from './Gallery'
 
 const PARALLAX_DATA = [
     {
