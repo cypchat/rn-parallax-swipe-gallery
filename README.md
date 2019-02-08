@@ -4,6 +4,8 @@ add it to your repo
  
 
     npm i --save @cypchat/rn-parallax-swipe-gallery
+    &
+    yarn add @cypchat/rn-parallax-swipe-gallery
 
 ## HOW TO
 
