@@ -9,7 +9,9 @@ add it to your repo
 
 ## HOW TO
 
-**(c) cypchat.**
+**(c) cypchat.** 
+
+**v.0.1.0 stable**
 
 rn-parallax-swipe-gallery is a very easy to use parallax gallery.
 
@@ -41,11 +43,11 @@ and pass it through to Gallery component:
 
 Thats all you need to do.
 
-|Features & versions | url | source |
-|--|--|--|
-| v0.0.1  | ✔ |	|
-| v0.0.2  | ✔ |	|
-| v0.0.3  | ✔ | ✔ |
+|Features & versions | url | source | stable |
+|--|--|--|--|
+| v0.0.1  | ✔ | ✖	| ✖
+| v0.0.2  | ✔ | ✖	| ✖
+| v0.1.0  | ✔ | ✔ | ✔ |
 
 
 ![enter image description here](https://lh3.googleusercontent.com/Z-aLNLaRBcZbyN_JnVQg6wMnTLj7cMefL_hEcQ_Dybgr_B3LHQkALYvZZMYQAqQTHoCMn6pKG0DM "Swipe Update gif")
