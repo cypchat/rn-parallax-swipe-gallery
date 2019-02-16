@@ -48,5 +48,5 @@ Thats all you need to do.
 | v0.0.3  | ✔ | ✔ |
 
 
-![enter image description here](https://lh3.googleusercontent.com/ZkMy4V2BrtiKCXDNOzw6v--XHdLUlaVYy6zdwRqjA93hWwvbPkwsLyH3D5WpcPT1GrTGvsrmeGNH)
+![enter image description here](https://lh3.googleusercontent.com/Z-aLNLaRBcZbyN_JnVQg6wMnTLj7cMefL_hEcQ_Dybgr_B3LHQkALYvZZMYQAqQTHoCMn6pKG0DM "Swipe Update gif")
 
