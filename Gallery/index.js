@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
     StyleSheet,
     View,
@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
-const DEFAULT_HEADER_HEIGHT = Dimensions.get('window').height;
+const SCREEN_HEIGHT = Dimensions.get('window').height;
 const DEFAULT_THRESHOLD = SCREEN_WIDTH * 0.50;
 const LEFTSIDE_THRESHOLD = SCREEN_WIDTH * 0.50;
 
@@ -21,11 +21,9 @@ class BlurredImage extends Component {
         super(props);
 
         this.state = {
-            loading: true
+            loading: 'started'
         };
 
-        const SCREEN_WIDTH = Dimensions.get('window').width;
-        const DEFAULT_HEADER_HEIGHT = SCREEN_WIDTH - 150;
     }
 
     _renderActivityIndicator = _ => {
@@ -33,29 +31,43 @@ class BlurredImage extends Component {
             alignItems: "center",
             justifyContent: "center",
             width: SCREEN_WIDTH,
-            height: DEFAULT_HEADER_HEIGHT
+            height: SCREEN_HEIGHT
         }}>
-            <ActivityIndicator color="#fff" size="large"/>
+            <ActivityIndicator color="#fff" size="large" />
         </View>
     };
 
+    onLoadStart = _ => {
+        this.setState({loading: 'started'})
+        setTimeout(_ => {
+            if(this.state.loading === 'started') {
+                this.setState({loading: 'waiting'})
+            }
+        }, 200)
+    }
+
     render() {
-        const {item} = this.props;
+        const { item } = this.props;
         return (
             <View>
                 {/* Blurred background Image. */}
                 <Image
-                    source={{
-                        uri: item.uri,
-                        headers: {
-                            Pragma: 'only-if-cached',
-                        }
-                    }}
-                    onLoad={_ => this.setState({loading: false})}
-                    onLoadStart={_ => this.setState({loading: true})}
+                    source={
+                        item.uri
+                            ?
+                            { uri: item.uri, headers: { Pragma: 'only-if-cached' } }
+                            :
+                            item.source
+                                ?
+                                item.source
+                                :
+                                null
+                    }
+                    onLoad={_ => this.setState({ loading: 'done' })}
+                    onLoadStart={_ => this.onLoadStart()}
                     style={{
                         width: SCREEN_WIDTH,
-                        height: DEFAULT_HEADER_HEIGHT,
+                        height: SCREEN_HEIGHT,
                         position: 'absolute',
                         backgroundColor: 'black'
                     }}
@@ -65,28 +77,34 @@ class BlurredImage extends Component {
                 />
 
                 {
-                    this.state.loading
+                    this.state.loading === 'waiting'
                         ?
                         this._renderActivityIndicator()
                         :
-                        <View>
+                        <View style={{ alignItems: 'center', justifyContent: 'center', height: '100%' }}>
                             {/* Actual Image. */}
                             <Image
-                                source={{
-                                    uri: item.uri,
-                                    headers: {
-                                        Pragma: 'only-if-cached',
-                                    }
+                                source={
+                                    item.uri
+                                        ?
+                                        { uri: item.uri, headers: { Pragma: 'only-if-cached' } }
+                                        :
+                                        item.source
+                                            ?
+                                            item.source
+                                            :
+                                            null
+                                }
+                                style={{
+                                    width: SCREEN_WIDTH,
+                                    height: (SCREEN_WIDTH * item.height) / item.width,
                                 }}
-                                style={{width: SCREEN_WIDTH, height: DEFAULT_HEADER_HEIGHT}}
-                                resizeMode='contain'
-                                cache={false}
                             />
                             {
                                 item.comment
                                     ?
                                     <View style={styles.imageContent}>
-                                        <Text style={{color: '#fff', fontSize: 12}}>
+                                        <Text style={{ color: '#fff', fontSize: 12 }}>
                                             {item.comment}
                                         </Text>
                                     </View>
@@ -96,6 +114,7 @@ class BlurredImage extends Component {
                         </View>
                 }
 
+
             </View>
         )
     }
@@ -103,6 +122,15 @@ class BlurredImage extends Component {
 
 
 export default class Gallery extends Component {
+
+    static defaultProps = {
+        image_data: [
+            {
+                source: "",
+                comment: "Please provide image_data"
+            }
+        ]
+    }
 
     constructor(props) {
         super(props);
@@ -141,25 +169,25 @@ export default class Gallery extends Component {
     }
 
     handleSwipe = gestureState => {
-        this.position.setValue({x: gestureState.dx, y: 0});
+        this.position.setValue({ x: gestureState.dx, y: 0 });
         const leftEdgeOfTheImage = SCREEN_WIDTH + Object.values(this.position.x)[1];
 
         // left side of the array is outside and if the first image is showing
         // the image can not go to anywhere because it is the end of the image array.
         if (leftEdgeOfTheImage > SCREEN_WIDTH && this.state.index === 0) {
-            this.setState({speed: 'slow'});
+            this.setState({ speed: 'slow' });
         }
         // if not the first image is showing
         // and the left side of the array is in between the left side threshold and width of screen.
         else if (leftEdgeOfTheImage > SCREEN_WIDTH && leftEdgeOfTheImage < SCREEN_WIDTH + LEFTSIDE_THRESHOLD && this.state.index !== 0) {
-            this.setState({speed: 'fast'});
+            this.setState({ speed: 'fast' });
         }
         // if not the first image is showing
         // and left side of the array is bigger than the screen width also the threshold
         else if (leftEdgeOfTheImage > SCREEN_WIDTH && leftEdgeOfTheImage > SCREEN_WIDTH + LEFTSIDE_THRESHOLD && this.state.index !== 0) {
-            this.setState({speed: 'fast'});
+            this.setState({ speed: 'fast' });
         } else {
-            this.setState({speed: 'slow'});
+            this.setState({ speed: 'slow' });
         }
 
     };
@@ -175,10 +203,10 @@ export default class Gallery extends Component {
 
                 // Automatically set the position to 0.
                 Animated.timing(this.position, {
-                    toValue: {x: 0, y: 0},
+                    toValue: { x: 0, y: 0 },
                     duration: 300
                 }).start(() => {
-                    this.position.setValue({x: 0, y: 0});
+                    this.position.setValue({ x: 0, y: 0 });
                 });
 
             } else {
@@ -187,25 +215,25 @@ export default class Gallery extends Component {
 
                     // Automatically swipe to right edge of the screen. direction: [ --> ]
                     Animated.timing(this.position, {
-                        toValue: {x: 0, y: 0},
+                        toValue: { x: 0, y: 0 },
                         duration: 300
                     }).start(() => {
-                        this.position.setValue({x: 0, y: 0});
+                        this.position.setValue({ x: 0, y: 0 });
                     });
 
                 } else {
 
                     // Automatically swipe to left edge of the screen. direction: [ <-- ]
                     Animated.timing(this.position, {
-                        toValue: {x: -SCREEN_WIDTH, y: 0},
+                        toValue: { x: -SCREEN_WIDTH, y: 0 },
                         duration: 300
                     }).start(() => {
                         // Update the swiped images array.
                         this.leftSwipedImagesArray.push(this.props.image_data[this.state.index]);
 
                         // Set the index of the image that is showing right now.
-                        this.setState({index: this.state.index + 1});
-                        this.position.setValue({x: 0, y: 0});
+                        this.setState({ index: this.state.index + 1 });
+                        this.position.setValue({ x: 0, y: 0 });
                     });
 
                 }
@@ -219,10 +247,10 @@ export default class Gallery extends Component {
 
             // Automatically set the position to 0.
             Animated.timing(this.position, {
-                toValue: {x: 0, y: 0},
+                toValue: { x: 0, y: 0 },
                 duration: 300
             }).start(() => {
-                this.position.setValue({x: 0, y: 0});
+                this.position.setValue({ x: 0, y: 0 });
             });
 
         }
@@ -231,10 +259,10 @@ export default class Gallery extends Component {
         else if (leftEdgeOfTheImage > SCREEN_WIDTH && leftEdgeOfTheImage < SCREEN_WIDTH + LEFTSIDE_THRESHOLD && this.state.index !== 0) {
             // Automatically set the position to 0.
             Animated.timing(this.position, {
-                toValue: {x: 0, y: 0},
+                toValue: { x: 0, y: 0 },
                 duration: 300
             }).start(() => {
-                this.position.setValue({x: 0, y: 0});
+                this.position.setValue({ x: 0, y: 0 });
             });
 
         }
@@ -243,15 +271,15 @@ export default class Gallery extends Component {
         else if (leftEdgeOfTheImage > SCREEN_WIDTH && leftEdgeOfTheImage > SCREEN_WIDTH + LEFTSIDE_THRESHOLD && this.state.index !== 0) {
             // Automatically swipe to left edge of the screen. direction: [ --> ]
             Animated.timing(this.position, {
-                toValue: {x: SCREEN_WIDTH, y: 0},
+                toValue: { x: SCREEN_WIDTH, y: 0 },
                 duration: 300
             }).start(() => {
                 // Update the swiped images array.
                 this.leftSwipedImagesArray.splice(this.leftSwipedImagesArray.length - 1, 1);
 
                 // Set the index of the image that is showing right now.
-                this.setState({index: this.state.index - 1});
-                this.position.setValue({x: 0, y: 0});
+                this.setState({ index: this.state.index - 1 });
+                this.position.setValue({ x: 0, y: 0 });
             });
 
         }
@@ -296,13 +324,13 @@ export default class Gallery extends Component {
                 return <Animated.View
                     key={index}
                     style={this.getLeftImageParallaxPositions()}>
-                    <BlurredImage item={item}/>
+                    <BlurredImage item={item} />
                 </Animated.View>
             } else {
                 return <Animated.View
                     key={index}
-                    style={{position: 'absolute'}}>
-                    <BlurredImage item={item}/>
+                    style={{ position: 'absolute' }}>
+                    <BlurredImage item={item} />
                 </Animated.View>
             }
         })
@@ -320,7 +348,7 @@ export default class Gallery extends Component {
                     key={index}
                     {...this.panResponder.panHandlers}
                     style={this.getFirstImageParallaxPositions()}>
-                    <BlurredImage item={item}/>
+                    <BlurredImage item={item} />
                 </Animated.View>
             }
         });
@@ -330,7 +358,7 @@ export default class Gallery extends Component {
         // Render other whole images into a single AnimatedView
         return this.props.image_data.map((item, index) => {
             if (index > this.state.index) {
-                return <BlurredImage item={item} key={index}/>
+                return <BlurredImage item={item} key={index} />
             }
         });
     };
@@ -343,7 +371,7 @@ export default class Gallery extends Component {
                 <View style={styles.header}>
 
                     <View style={{
-                        height: DEFAULT_HEADER_HEIGHT,
+                        height: SCREEN_HEIGHT,
                         flexDirection: 'row',
                         position: 'absolute',
                         left: this.leftImagesInitialPosition
@@ -354,7 +382,7 @@ export default class Gallery extends Component {
                     </View>
 
                     <View style={{
-                        height: DEFAULT_HEADER_HEIGHT,
+                        height: SCREEN_HEIGHT,
                         flexDirection: 'row'
                     }}>
                         {
@@ -384,7 +412,7 @@ const styles = StyleSheet.create({
     },
     header: {
         width: SCREEN_WIDTH,
-        height: DEFAULT_HEADER_HEIGHT,
+        height: SCREEN_HEIGHT,
         backgroundColor: '#000'
     },
     imageContent: {
