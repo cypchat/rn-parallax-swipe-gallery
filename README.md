@@ -11,13 +11,13 @@ add it to your repo
 
 **(c) cypchat.** 
 
-**v0.1.2 stable**
+**v1.0.0 stable**
 
 |Features & versions | url | source | stable |
 |--|--|--|--|
 | v0.0.1  | ✔ | ✖	| ✖
 | v0.0.2  | ✔ | ✖	| ✖
-| v0.1.2  | ✔ | ✔ | ✔ |
+| v1.0.0  | ✔ | ✔ | ✔ |
 
 rn-parallax-swipe-gallery is a very easy to use parallax gallery.
 
