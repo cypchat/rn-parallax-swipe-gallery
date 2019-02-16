@@ -3,27 +3,25 @@ import {StyleSheet, View, StatusBar} from 'react-native';
 
 // components
 import Gallery from './Gallery'
+let caretta = require('./assets/caretta.jpg')
 
 const PARALLAX_DATA = [
     {
-        comment: '1) this was a great day like a day from heaven. this was a great day like a day from heaven.',
-        uri: 'http://imgs.abduzeedo.com/files/paul0v2/unsplash/unsplash-04.jpg'
+        comment: 'I love the ocean, because I am a caretta :)))',
+        source: caretta,
+        width: 2048,
+        height: 1360
     },
     {
-        comment: '2) this was a great day like a day from heaven.',
-        uri: 'http://www.fluxdigital.co/wp-content/uploads/2015/04/Unsplash.jpg'
+        comment: 'Look at the shiny sun. There is no place such a beautiful vision in the Universe.',
+        uri: 'http://imgs.abduzeedo.com/files/paul0v2/unsplash/unsplash-04.jpg',
+        width: 900,
+        height: 598
     },
     {
-        comment: '3) this was a great day like a day from heaven.',
-        uri: 'http://imgs.abduzeedo.com/files/paul0v2/unsplash/unsplash-04.jpg'
-    },
-    {
-        comment: '4) this was a great day like a day from heaven.',
-        uri: 'http://imgs.abduzeedo.com/files/paul0v2/unsplash/unsplash-09.jpg'
-    },
-    {
-        comment: '5) this was a great day like a day from heaven.',
-        uri: 'http://imgs.abduzeedo.com/files/paul0v2/unsplash/unsplash-04.jpg'
+        uri: 'http://www.fluxdigital.co/wp-content/uploads/2015/04/Unsplash.jpg',
+        width: 800,
+        height: 390
     }
 ];
 
